@@ -1,0 +1,79 @@
+import time
+
+
+def collect():
+    """this function collects user information and prepares it for calculate"""
+    collect_output = []  #list for returning multiple values from func via split#
+    savings = int(input('What is your current balance saved for retirement as a whole number?:'))
+    collect_output.append(savings)
+    salary= int(input('What is your yearly income as a whole number?:'))
+    collect_output.append(salary)
+    age = int(input('What is your current age?:'))
+    collect_output.append(age)
+    start_age = int(input("What age did you start working?:"))
+    end_age = int(input('What age do you plan on retiring?:'))
+    years_worked = age - start_age
+    collect_output.append(years_worked)
+    years_until_retirement = end_age - age
+    collect_output.append(years_until_retirement)
+    return collect_output
+
+def calculate(savings,salary,years_worked,years_until_retirement):
+    saving_values=[]
+    past_yearly_savings=savings//years_worked
+    saving_values.append(past_yearly_savings)
+    recommended_yearly_savings=salary / 100 * 15
+    saving_values.append(recommended_yearly_savings)
+    potential_future_savings = recommended_yearly_savings*years_until_retirement
+    saving_values.append(potential_future_savings)
+    return saving_values
+
+def greet_user():
+        print('HI!, Welcome to my program, its purpose is to check on your finances health.')
+        print('But first let me get some some basic information from you.')
+        first_name=input('What is your given name?')
+        print('thats such a great name!')
+        last_name=input('And what is your family name?')
+        user_name = []
+        user_name.append(first_name)
+        user_name.append(last_name)
+        return user_name
+
+#this calls the early functions and strips info from lists user to return multiple values form them#
+
+username=greet_user()
+first_name=str(username[0])
+last_name=str(username[1])
+collected_info=collect()
+savings=int(collected_info[0])
+salary=int(collected_info[1])
+age=int(collected_info[2])
+years_worked=int(collected_info[3])
+years_until_retirement=int(collected_info[4])
+saving_values=calculate(savings,salary,years_worked,years_until_retirement)
+past_yearly_savings=int(saving_values[0])
+recommended_yearly_savings=int(saving_values[1])
+potential_future_savings=int(saving_values[2])
+
+#this portion does the thinking and determins the health of the users finances#
+
+print(f'So, {first_name} I have taken a look at your finances')
+
+if past_yearly_savings < recommended_yearly_savings:
+    print(f'and it looks like you past yearly savings of {past_yearly_savings} were lower then the recommended')
+elif past_yearly_savings > recommended_yearly_savings:
+    print(f'WOW you have been doing great. Your past savings of {past_yearly_savings} is more than the recommended!')
+else:
+    print(f'Perfect, your past savings of {past_yearly_savings} is right on target!')
+
+
+print( f'The recommended is 15%, which for your salary of {salary} would come out to {recommended_yearly_savings} a year')
+time.sleep(1)
+print('Dont worry if your savings arent were you would like')
+time.sleep(1)
+print('you can still start saving more!')
+print(f'If you started saving the recommended 15%, when you retire at {age+years_until_retirement} years old, you could have {potential_future_savings}!!')
+time.sleep(1)
+print(f'you still have {years_until_retirement} years untill retirement')
+
+
